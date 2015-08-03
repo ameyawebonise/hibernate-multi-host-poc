@@ -43,7 +43,7 @@ public class PersonDAOImplTests {
         LOG.info("running the read data");
         List<Person> result =  personDaoImpl.readAll();
         Assert.assertNotNull(result);
-        LOG.info(""+result.size());
+        LOG.info("Population is "+result.size());
         for(Person p : result){
             LOG.info(p.toString());
         }
@@ -51,71 +51,6 @@ public class PersonDAOImplTests {
     }
 
 
-    /* @BeforeClass
-     public void createHibernateSession() {
-
-         hibernateSessionFactory = new HibernateSessionManager();
-         personDAOImpl = new PersonDAOImpl(hibernateSessionFactory);
-     }
-
-     @Test
-     public void testSavePerson() {
-         String socialId = "ABCD-7712";
-         Person fixture = getFixture();
-         fixture.setSocialId(socialId);
-         fixture.setAddDate(new Date());
-         fixture = checkPersonExistAndModify(fixture);
-
-         personDAOImpl.savePerson(fixture);
-         Person dbRecord = personDAOImpl.getPersonBySocialId(socialId);
-         Assert.assertNotNull(dbRecord);
-
-         LOG.debug("Person social id {} {}", dbRecord, dbRecord.getSocialId());
-     }
-
-     @Test
-     public void testGetPersonBySocialId(){
-         String socialId = "ABCD-222";
-         String name = "Anvay";
-         Person fixture = getFixture();
-         fixture.setName(name);
-         fixture.setSocialId(socialId);
-         fixture.setAddDate(new Date());
-         fixture = checkPersonExistAndModify(fixture);
-         personDAOImpl.savePerson(fixture);
-
-         Person dbRecord = personDAOImpl.getPersonBySocialId(socialId);
-         Assert.assertEquals(socialId, dbRecord.getSocialId());
-         Assert.assertEquals(name, dbRecord.getName());
-
-
-     }
-
-     @Test
-     public void testIsPersonExist() {
-         String socialId = "ABCD-333";
-         Person fixture = getFixture();
-         fixture.setSocialId(socialId);
-         fixture.setAddDate(new Date());
-         fixture = checkPersonExistAndModify(fixture);
-         personDAOImpl.savePerson(fixture);
-
-         Assert.assertTrue(personDAOImpl.isPersonExist(socialId));
-
-     }
-
-     @Test
-     public void testDeletePerson() {
-         String socialId = "ABCD-444";
-         Person fixture = getFixture();
-         fixture.setSocialId(socialId);
-         fixture= checkPersonExistAndModify(fixture);
-         personDAOImpl.savePerson(fixture);
-
-         personDAOImpl.deletePerson(fixture);
-         Assert.assertNull(personDAOImpl.getPersonBySocialId(socialId));
-     }
- */
     private Person getFixture() {
         Person person = new Person();
         SecureRandom random = new SecureRandom();
@@ -128,13 +63,8 @@ public class PersonDAOImplTests {
         person.setSocialId(new BigInteger(130, random).toString(32)); //just generating a fancy random string
         return person;
     }
-/*
-    private Person checkPersonExistAndModify(Person fixture){
 
-        if (personDAOImpl.isPersonExist(fixture.getSocialId())) {
-            fixture.setId(personDAOImpl.getPersonBySocialId(fixture.getSocialId()).getId());
-        }
-        return fixture;
-    }
-*/
+    /*TODO:
+    Mock out the prepSessionMethod to set the connection.readOnly to true and call the save method
+    */
 }

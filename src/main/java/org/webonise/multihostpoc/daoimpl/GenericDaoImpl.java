@@ -44,7 +44,7 @@ public class GenericDaoImpl<T,PK extends Serializable> implements GenericDao<T> 
     @Override
     public void save(T object) {
         Session currentSession = getSession();
-        prepSession(currentSession,false,false);
+        prepSession(currentSession,false);
         currentSession.getTransaction().begin();
         currentSession.saveOrUpdate(object);
         currentSession.getTransaction().commit();
@@ -53,7 +53,7 @@ public class GenericDaoImpl<T,PK extends Serializable> implements GenericDao<T> 
     @Override
     public List<T> readAll() {
         Session currentSession = getSession();
-        prepSession(currentSession,true,true);
+        prepSession(currentSession,true);
         Criteria criteria = currentSession.createCriteria(type);
         List<T> result = (List<T>) criteria.list();
         return result;
@@ -66,11 +66,10 @@ public class GenericDaoImpl<T,PK extends Serializable> implements GenericDao<T> 
         return  this.session;
     }
 
-    private void prepSession(Session session,boolean readOnlyFlag,boolean autoCommitFlag) {
+    private void prepSession(Session session,boolean readOnlyFlag) {
         try {
             SessionImpl sessionImpl = (SessionImpl) this.getSession();
             sessionImpl.connection().setReadOnly(readOnlyFlag);
-            sessionImpl.connection().setAutoCommit(autoCommitFlag);
         }
         catch (Exception e){
             LOG.error("Error occured in prepping the session.");
